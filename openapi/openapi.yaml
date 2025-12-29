@@ -2,15 +2,69 @@ openapi: "3.0.0"
 info:
   title: "Hello API"
   version: "0.1.0"
+  description: "學生註冊系統 API"
+
 servers:
   - url: "https://api.example.edu/api/v1"
     description: "Production"
+
+# Tags 設定 (作業要求)
+tags:
+  - name: health
+    description: "服務健康檢查"
+  - name: students
+    description: "學生資料管理"
+
+externalDocs:
+  description: "本課程手冊"
+  url: "https://example.edu/wsse/handbook"
+
+# 安全性設定 (作業要求：全域 API Key)
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  
+  schemas:
+    # 學生模型
+    Student:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: "主鍵"
+        name:
+          type: string
+          minLength: 1
+          description: "學生姓名"
+    
+    # 錯誤模型
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: "ERR_NOT_FOUND"
+        message:
+          type: string
+          example: "Resource not found"
+
+# 全域安全性宣告
+security:
+  - ApiKeyAuth: []
+
 paths:
   /health:
     get:
+      tags: [health]
       summary: "Health check"
       description: "服務是否正常"
-      security: [] # 覆寫全域安全：此端點匿名
+      security: [] # 覆寫：此端點匿名
       responses:
         "200":
           description: "OK"
@@ -19,6 +73,53 @@ paths:
               schema:
                 type: object
                 properties:
-                  status: 
+                  status:
                     type: string
-                    example: "ok" # 這是為了作業 PR 測試用的註解
+                    example: "ok"
+
+  /students:
+    get:
+      tags: [students]
+      summary: "List students"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Student"
+        # 練習多型別錯誤回應
+        "500":
+          description: "Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      tags: [students]
+      summary: "Create student"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Student"
+            examples:
+              ok:
+                value: 
+                  id: 101
+                  name: "Ann"
+      responses:
+        "201":
+          description: "Created"
+          headers:
+            Location:
+              description: "新資源 URL（例如 /api/v1/students/101）"
+              schema:
+                type: string
