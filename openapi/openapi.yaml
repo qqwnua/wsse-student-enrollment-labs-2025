@@ -21,4 +21,4 @@ paths:
                 properties:
                   status: 
                     type: string
-                    example: "ok"
+                    example: "ok" # 這是為了作業 PR 測試用的註解
