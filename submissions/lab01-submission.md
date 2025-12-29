@@ -7,13 +7,13 @@
 [https://github.com/qqwnua/wsse-student-enrollment-labs-2025/pull/1](https://github.com/qqwnua/wsse-student-enrollment-labs-2025/pull/1)
 
 ## 3. Swagger Editor 截圖
-![Swagger Editor](./01-editor.png)
+![Swagger Editor](../images/lab01/01-editor.png)
 
 ## 4. PR 綠燈截圖
-![PR Green](./02-pr-green.png)
+![PR Green](../images/lab01/02-pr-green.png)
 
 ## 5. CI 內容截圖 (Job log)
-![CI Log](./03-actions-log.png)
+![CI Log](../images/lab01/03-actions-log.png)
 
 ## 6. 重點片段連結
 * [openapi/openapi.yaml#L50-L60](/openapi/openapi.yaml) - /health GET
