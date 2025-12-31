@@ -37,4 +37,5 @@
 
 ## 7. CloudWatch Logs (Observability)
 ### RequestId 對照與執行紀錄
-![CloudWatch Logs](./evidence/411177029-logs.png)
+
+![CloudWatch Logs](./evidence/411177029-logs.png)   
